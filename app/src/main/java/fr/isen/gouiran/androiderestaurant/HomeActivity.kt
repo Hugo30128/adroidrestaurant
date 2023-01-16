@@ -3,31 +3,32 @@ package fr.isen.gouiran.androiderestaurant
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
+import fr.isen.gouiran.androiderestaurant.databinding.ActivityHomeBinding
 
 class HomeActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityHomeBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-        val entree = findViewById<Button>(R.id.buttonEntree)
-        val plat = findViewById<Button>(R.id.buttonPlats)
-        val dessert = findViewById<Button>(R.id.buttonDessert)
 
-        entree.setOnClickListener {
-            val button = Intent(applicationContext, CategoryActivity::class.java)
-            intent.putExtra("ActivityName", "Entree")
-            startActivity(intent);
-        }
+        binding= ActivityHomeBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        plat.setOnClickListener {
+
+        binding.buttonEntree.setOnClickListener {
             val button = Intent(applicationContext, CategoryActivity::class.java)
-            intent.putExtra("ActivityName", "Plats")
-            startActivity(intent)
+            button.putExtra("ActivityName", "Entree")
+            startActivity(button)
         }
-        dessert.setOnClickListener {
+        binding.buttonPlats.setOnClickListener {
             val button = Intent(applicationContext, CategoryActivity::class.java)
-            intent.putExtra("ActivityName", "Dessert")
-            startActivity(intent)
+            button.putExtra("ActivityName", "Plat")
+            startActivity(button)
+        }
+        binding.buttonDessert.setOnClickListener {
+            val button = Intent(applicationContext, CategoryActivity::class.java)
+            button.putExtra("ActivityName", "Dessert")
+            startActivity(button)
         }
 
     }
