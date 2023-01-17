@@ -1,44 +1,49 @@
 package fr.isen.gouiran.androiderestaurant
 
-import androidx.appcompat.app.AppCompatActivity
+import android.os.Binder
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.TextView
-import androidx.annotation.NonNull
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import fr.isen.gouiran.androiderestaurant.databinding.ActivityCategoryBinding
 
 class CategoryActivity : AppCompatActivity() {
+
+    private val listEntree = ArrayList<String>()
+    private lateinit var customAdapter: CustomAdapter
+    private lateinit var binding: ActivityCategoryBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_category)
+        binding = ActivityCategoryBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         var category = intent.getStringExtra("ActivityName")
         val actionBar = supportActionBar
         actionBar?.title = category
 
-
-
-
+        customAdapter = CustomAdapter(listEntree)
+        binding.categoryList.layoutManager = LinearLayoutManager(applicationContext)
+        binding.categoryList.adapter = customAdapter
+        prepareItems()
         }
-    internal class CustomAdapter(private var itemsList: List<String>) : RecyclerView.Adapter<CustomAdapter.MyViewHolder>() {
-        internal inner class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-            var textView: TextView = view.findViewById(R.id.textView)
-        }
-        @NonNull
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-            val itemView = LayoutInflater.from(parent.context)
-                .inflate(R.layout.item, parent, false)
-            return MyViewHolder(itemView)
-        }
-        override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-            val item = itemsList[position]
-            holder.itemTextView.text = item
-        }
-        override fun getItemCount(): Int {
-            return itemsList.size
-        }
-    }
+    private fun prepareItems() {
+        listEntree.add("Item 1")
+        listEntree.add("Item 2")
+        listEntree.add("Item 3")
+        listEntree.add("Item 4")
+        listEntree.add("Item 5")
+        listEntree.add("Item 6")
+        listEntree.add("Item 7")
+        listEntree.add("Item 8")
+        listEntree.add("Item 9")
+        listEntree.add("Item 10")
 
     }
+}
+
+
+
+
+
+
+
