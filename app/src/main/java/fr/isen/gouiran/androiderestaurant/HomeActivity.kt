@@ -15,28 +15,26 @@ class HomeActivity : AppCompatActivity() {
         binding= ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
         binding.buttonEntree.setOnClickListener {
             val button = Intent(applicationContext, CategoryActivity::class.java)
-            button.putExtra("ActivityName", "Entree")
+            button.putExtra("ActivityName", "Entrées")
             startActivity(button)
         }
         binding.buttonPlats.setOnClickListener {
             val button = Intent(applicationContext, CategoryActivity::class.java)
-            button.putExtra("ActivityName", "Plat")
+            button.putExtra("ActivityName", "Plats")
             startActivity(button)
         }
         binding.buttonDessert.setOnClickListener {
             val button = Intent(applicationContext, CategoryActivity::class.java)
-            button.putExtra("ActivityName", "Dessert")
+            button.putExtra("ActivityName", "Desserts")
             startActivity(button)
         }
-
-
     }
-
     override fun onDestroy() {
         super.onDestroy()
         Log.d("Debug", "Home destroyed")
     }
 }
+
+
