@@ -10,15 +10,11 @@ import androidx.recyclerview.widget.RecyclerView
 import fr.isen.gouiran.androiderestaurant.model.Items
 import com.squareup.picasso.Picasso
 
-import java.util.Objects
-
-
 internal class CustomAdapter(private var itemsList: ArrayList<Items>, val onItemClickListener:(Items) -> Unit ): RecyclerView.Adapter<CustomAdapter.MyViewHolder>() {
     internal inner class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var itemTextView: TextView = view.findViewById(R.id.itemTextView)
         var price: TextView = view.findViewById(R.id.prices)
         var image: ImageView = view.findViewById(R.id.picture)
-
     }
     @NonNull
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -42,7 +38,6 @@ internal class CustomAdapter(private var itemsList: ArrayList<Items>, val onItem
     override fun getItemCount(): Int {
         return itemsList.size
     }
-
     fun refreshList(dishesFromAPI: ArrayList<Items>) {
         itemsList = dishesFromAPI
         notifyDataSetChanged()

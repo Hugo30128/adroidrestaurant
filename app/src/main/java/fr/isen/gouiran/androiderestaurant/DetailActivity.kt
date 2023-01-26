@@ -1,32 +1,34 @@
 package fr.isen.gouiran.androiderestaurant
 
+package com.example.carouselview
+
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.widget.EditText
-import android.widget.TextView
-import fr.isen.gouiran.androiderestaurant.databinding.ActivityDetailBinding
-import fr.isen.gouiran.androiderestaurant.model.Items
-import fr.isen.gouiran.androiderestaurant.model.Prices
+import android.widget.ImageView
+import com.squareup.picasso.Picasso
+import com.synnapps.carouselview.CarouselView
+import com.synnapps.carouselview.ImageListener
 
 class DetailActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityDetailBinding
-    private  lateinit var item: Items
-    private  lateinit var name: String
-    private lateinit var  price: String
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityDetailBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        item = intent.getSerializableExtra("Detail") as Items
-        name = item.nameFr.toString()
-        val actionBar = supportActionBar
-        actionBar?.title = name
-        price = item.prices[0].price.toString()
-
-        binding.pricess.text= price
+    class MainActivity : AppCompatActivity() {
+        var sampleImages = arrayOf(
+            "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_960_720.jpg",
+            "https://raw.githubusercontent.com/sayyam/carouselview/master/sample/src/main/res/drawable/image_1.jpg",
+            "https://raw.githubusercontent.com/sayyam/carouselview/master/sample/src/main/res/drawable/image_2.jpg"
+        )
+        override fun onCreate(savedInstanceState: Bundle?) {
+            super.onCreate(savedInstanceState)
+            setContentView(R.layout.activity_main)
+            val carouselView = findViewById(R.id.carouselView) as CarouselView;
+            carouselView.setPageCount(sampleImages.size);
+            carouselView.setImageListener(imageListener);
+        }
+        var imageListener: ImageListener = object : ImageListener {
+            override fun setImageForPosition(position: Int, imageView: ImageView) {
+                // You can use Glide or Picasso here
+                Picasso.get().load(sampleImages[position]).into(imageView)
+            }
+        }
     }
 }
