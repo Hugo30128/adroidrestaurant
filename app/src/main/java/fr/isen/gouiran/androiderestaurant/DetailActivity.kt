@@ -65,12 +65,7 @@ class DetailActivity : AppCompatActivity() {
             }
 
         }
-        val main = JSONObject()
-        main.put("Command", "CreateNewUser")
-        val user = JSONObject()
-        user.put("FirstName", "John")
-        user.put("LastName", "Reese")
-        main.put("User", user)
+
 
         binding.remove.setOnClickListener {
             if (somme != 0) {
