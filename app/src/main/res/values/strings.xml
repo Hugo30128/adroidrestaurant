@@ -4,6 +4,7 @@
     <string name="dishes">Plats</string>
     <string name="desserts">Desserts</string>
     <string name="title">Buffalo ISEN</string>
+    <string name="bank">0</string>
 
     <string-array name="plats">
         <item>Burger italien</item>

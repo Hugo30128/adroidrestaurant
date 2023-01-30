@@ -1,34 +1,94 @@
 package fr.isen.gouiran.androiderestaurant
 
-package com.example.carouselview
-
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.ImageView
+import android.text.Editable
+import androidx.appcompat.app.AppCompatActivity
 import com.squareup.picasso.Picasso
-import com.synnapps.carouselview.CarouselView
-import com.synnapps.carouselview.ImageListener
+import fr.isen.gouiran.androiderestaurant.databinding.ActivityDetailBinding
+import fr.isen.gouiran.androiderestaurant.model.Items
+import org.json.JSONObject
+
 
 class DetailActivity : AppCompatActivity() {
 
-    class MainActivity : AppCompatActivity() {
-        var sampleImages = arrayOf(
-            "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_960_720.jpg",
-            "https://raw.githubusercontent.com/sayyam/carouselview/master/sample/src/main/res/drawable/image_1.jpg",
-            "https://raw.githubusercontent.com/sayyam/carouselview/master/sample/src/main/res/drawable/image_2.jpg"
-        )
-        override fun onCreate(savedInstanceState: Bundle?) {
-            super.onCreate(savedInstanceState)
-            setContentView(R.layout.activity_main)
-            val carouselView = findViewById(R.id.carouselView) as CarouselView;
-            carouselView.setPageCount(sampleImages.size);
-            carouselView.setImageListener(imageListener);
+    private lateinit var binding: ActivityDetailBinding
+    private lateinit var item: Items
+    private lateinit var name: String
+    private lateinit var price: String
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityDetailBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+
+
+        item = intent.getSerializableExtra("Detail") as Items
+        name = item.nameFr.toString()
+        val ingredients = item.ingredients
+
+        if (item.images[0].isNotEmpty()) {
+            Picasso.get().load(item.images[0]).into(binding.pictureDetail);
         }
-        var imageListener: ImageListener = object : ImageListener {
-            override fun setImageForPosition(position: Int, imageView: ImageView) {
-                // You can use Glide or Picasso here
-                Picasso.get().load(sampleImages[position]).into(imageView)
+
+        val actionBar = supportActionBar
+        actionBar?.title = name
+        price = item.prices[0].price.toString()
+
+
+        binding.pricess.text = price + "€"
+        binding.nameDetail.text = name
+
+
+        val ingredientString = StringBuilder()
+        ingredients.forEach { ingredients ->
+            ingredientString.append(ingredients.nameFr)
+            ingredientString.append(", ")
+        }
+        binding.ingredient.text = ingredientString
+
+
+        val prix = item.prices
+        val priceString = java.lang.StringBuilder()
+        val priceunique = item.prices[0].price?.toDouble()
+        var somme = 0
+        binding.add.setOnClickListener {
+            somme++
+            binding.count.text =
+                Editable.Factory.getInstance().newEditable(somme.toString())
+            if (item.prices.isNotEmpty()) {
+                prix.forEach { prix ->
+                    priceString.append(prix.price)
+                }
+                val number = somme * priceunique!!
+                binding.bank.text = "Total: " +  number.toString() + "€"
+            }
+
+        }
+        val main = JSONObject()
+        main.put("Command", "CreateNewUser")
+        val user = JSONObject()
+        user.put("FirstName", "John")
+        user.put("LastName", "Reese")
+        main.put("User", user)
+
+        binding.remove.setOnClickListener {
+            if (somme != 0) {
+                somme--
+                binding.count.text =
+                    Editable.Factory.getInstance().newEditable(somme.toString())
+                if (item.prices.isNotEmpty()) {
+                    prix.forEach { prix ->
+                        priceString.append(prix.price + "€")
+                    }
+                    val number = somme * priceunique!!
+                    binding.bank.text = "Total: " + number.toString() + "€"
+                }
             }
         }
     }
+
+
 }
+
+
